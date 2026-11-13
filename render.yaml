@@ -1,0 +1,34 @@
+# MezoGuard monitor — Render Background Worker (PRIMARY alert engine; runs a cycle every MONITOR_INTERVAL_SECONDS).
+# The Next.js app is deployed on Vercel; its daily cron (vercel.json) is only a backstop.
+# Background workers need a paid instance type (no free tier).
+services:
+  - type: worker
+    name: mezoguard-worker
+    runtime: node
+    plan: starter
+    region: oregon
+    # tsx is a devDependency → include dev deps even if NODE_ENV is set.
+    buildCommand: npm ci --include=dev
+    startCommand: npm run worker
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATABASE_URL          # Postgres (Supabase/Neon). Same DB as the Vercel app.
+        sync: false
+      - key: DB_SCHEMA             # Postgres schema holding MezoGuard tables (shared Supabase project → "mezoguard")
+        value: mezoguard
+      - key: MONITOR_INTERVAL_SECONDS
+        value: "60"
+      - key: APP_URL               # used for deep links in alerts, e.g. https://mezoguard.vercel.app
+        sync: false
+      - key: NEXT_PUBLIC_MEZO_RPC_URL
+        value: https://rpc.test.mezo.org
+      - key: NEXT_PUBLIC_PROTECTOR_ADDRESS   # MezoGuardProtector on Mezo testnet
+        value: "0xA405907C5786bC93451A5F43FA9EdE379a80cB95"
+      - key: RESEND_API_KEY        # optional; email deliveries are recorded "skipped" without it
+        sync: false
+      - key: ALERT_FROM_EMAIL      # optional; verified Resend sender, e.g. alerts@yourdomain.com
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN    # optional; Telegram deliveries are recorded "skipped" without it
+        sync: false

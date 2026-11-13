@@ -1,0 +1,245 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * MezoGuard tokens (see docs/DESIGN.md). OKLCH throughout.
+ * Restrained: tinted neutrals (hue 255, chroma ≤ 0.015) + one petrol accent for links, focus and chart lines.
+ * Risk hues are reserved for risk state only. Red appears only for critical / liquidatable / destructive.
+ */
+:root {
+  --bg: oklch(1 0 0);
+  --surface: oklch(0.982 0.003 255);
+  --surface-2: oklch(0.962 0.005 255);
+  --raised: oklch(1 0 0);
+  --ink: oklch(0.22 0.014 258);
+  --ink-2: oklch(0.43 0.014 258);
+  --ink-3: oklch(0.52 0.012 258);
+  --line: oklch(0.915 0.006 258);
+  --line-strong: oklch(0.85 0.008 258);
+
+  --accent: oklch(0.47 0.095 226);
+  --accent-ink: oklch(0.41 0.09 226);
+  --accent-soft: oklch(0.955 0.018 226);
+  --on-accent: oklch(0.99 0 0);
+  --focus: oklch(0.55 0.12 226);
+
+  --primary: var(--ink);
+  --on-primary: oklch(0.985 0 0);
+
+  /* Risk scale: dot colours. Words beside them stay in --ink for contrast. */
+  --risk-healthy: oklch(0.6 0.13 155);
+  --risk-watch: oklch(0.77 0.15 84);
+  --risk-high: oklch(0.67 0.17 52);
+  --risk-critical: oklch(0.56 0.205 27);
+  --risk-liquidatable: oklch(0.42 0.16 20);
+
+  /* Semantic surfaces */
+  --warn-bg: oklch(0.972 0.03 88);
+  --warn-line: oklch(0.88 0.07 85);
+  --warn-ink: oklch(0.42 0.09 65);
+  --danger-bg: oklch(0.968 0.018 25);
+  --danger-line: oklch(0.86 0.06 25);
+  --danger-ink: oklch(0.47 0.17 27);
+  --ok-ink: oklch(0.45 0.11 155);
+
+  --chart-1: var(--accent);
+  --chart-2: oklch(0.62 0.07 280);
+  --chart-3: oklch(0.66 0.08 190);
+  --chart-4: oklch(0.6 0.04 258);
+  --chart-grid: var(--line);
+
+  --shadow-sm: 0 1px 2px oklch(0.22 0.02 258 / 0.06);
+  --shadow-md: 0 8px 28px -10px oklch(0.22 0.03 258 / 0.18), 0 2px 6px -2px oklch(0.22 0.02 258 / 0.08);
+  --scrim: oklch(0.2 0.02 258 / 0.38);
+}
+
+.dark {
+  --bg: oklch(0.175 0.008 258);
+  --surface: oklch(0.205 0.009 258);
+  --surface-2: oklch(0.235 0.01 258);
+  --raised: oklch(0.225 0.01 258);
+  --ink: oklch(0.95 0.004 258);
+  --ink-2: oklch(0.77 0.01 258);
+  --ink-3: oklch(0.67 0.01 258);
+  --line: oklch(0.29 0.01 258);
+  --line-strong: oklch(0.37 0.012 258);
+
+  --accent: oklch(0.76 0.1 226);
+  --accent-ink: oklch(0.8 0.09 226);
+  --accent-soft: oklch(0.27 0.03 226);
+  --on-accent: oklch(0.18 0.01 258);
+  --focus: oklch(0.72 0.11 226);
+
+  --primary: oklch(0.94 0.004 258);
+  --on-primary: oklch(0.19 0.008 258);
+
+  --risk-healthy: oklch(0.72 0.14 155);
+  --risk-watch: oklch(0.82 0.15 86);
+  --risk-high: oklch(0.74 0.16 55);
+  --risk-critical: oklch(0.68 0.2 27);
+  --risk-liquidatable: oklch(0.62 0.21 22);
+
+  --warn-bg: oklch(0.26 0.04 80);
+  --warn-line: oklch(0.38 0.07 80);
+  --warn-ink: oklch(0.88 0.1 86);
+  --danger-bg: oklch(0.26 0.05 25);
+  --danger-line: oklch(0.4 0.1 25);
+  --danger-ink: oklch(0.82 0.11 25);
+  --ok-ink: oklch(0.8 0.12 155);
+
+  --chart-2: oklch(0.72 0.08 280);
+  --chart-3: oklch(0.74 0.08 190);
+  --chart-4: oklch(0.6 0.03 258);
+
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.3);
+  --shadow-md: 0 10px 30px -10px oklch(0 0 0 / 0.55), 0 2px 6px -2px oklch(0 0 0 / 0.4);
+  --scrim: oklch(0.1 0.01 258 / 0.6);
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-focus: var(--focus);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-risk-healthy: var(--risk-healthy);
+  --color-risk-watch: var(--risk-watch);
+  --color-risk-high: var(--risk-high);
+  --color-risk-critical: var(--risk-critical);
+  --color-risk-liquidatable: var(--risk-liquidatable);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-line: var(--warn-line);
+  --color-warn-ink: var(--warn-ink);
+  --color-danger-bg: var(--danger-bg);
+  --color-danger-line: var(--danger-line);
+  --color-danger-ink: var(--danger-ink);
+  --color-ok-ink: var(--ok-ink);
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* z-index scale */
+  --z-sticky: 20;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01" 0;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+    letter-spacing: -0.015em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: var(--accent-soft);
+  }
+  input::placeholder, textarea::placeholder {
+    color: var(--ink-3);
+    opacity: 1;
+  }
+}
+
+@utility num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 640px) {
+    padding-inline: 24px;
+  }
+  @media (width >= 1024px) {
+    padding-inline: 32px;
+  }
+}
+
+/* Skeleton shimmer, disabled for reduced motion */
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 0%, var(--line) 50%, var(--surface-2) 100%);
+  background-size: 200% 100%;
+  animation: mg-shimmer 1.4s var(--ease-out-quart) infinite;
+  border-radius: var(--radius-md);
+}
+@keyframes mg-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Recharts: inherit theme tokens */
+.recharts-cartesian-grid line {
+  stroke: var(--chart-grid);
+}
+.recharts-text {
+  fill: var(--ink-3);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.recharts-tooltip-cursor {
+  stroke: var(--line-strong);
+}

@@ -1,0 +1,10 @@
+.claude
+contracts
+research
+.data
+.solidity-auditor
+.next
+node_modules
+*.log
+tests
+vitest.config.mts

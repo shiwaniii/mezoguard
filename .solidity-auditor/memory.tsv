@@ -1,0 +1,24 @@
+#solidity-auditor-memory v1	key	status	scans	sha	title	kind
+mezoguardprotector|executerepay|caller-agnostic-signature	NEW	1	edec6e7	Any caller can submit the stored repay signature to BorrowerOperationsSignatures	FINDING
+mezoguardprotector|executerepay|bos-repay-revert-unpredicted	NEW	1	edec6e7	The protector accepts rules that BorrowerOperations rejects when they run	FINDING
+mezoguardprotector|revoke|revoke-leaves-signature-live	NEW	1	edec6e7	Revoke does not cancel the stored signature	FINDING
+mezoguardprotector|arm|rule-survives-trove-close	NEW	1	edec6e7	An armed rule stays active after the borrower closes the Trove	FINDING
+mezoguardprotector|arm|caller-agnostic-signature	NEW	1	edec6e7	Re-arming leaves the earlier signature valid at the same nonce	FINDING
+mezoguardprotector|executerepay|rule-survives-trove-close	NEW	1	edec6e7	executeRepay checks no Trove identity	LEAD
+mezoguardprotector|executerepay|keeper-liveness-enables-liquidation	NEW	1	edec6e7	A 110% trigger fires only when a liquidator can already act	FINDING
+mezoguardprotector|executerepay|dust-repay-no-improvement	NEW	1	edec6e7	A very small repay always reverts with NoImprovement	LEAD
+mezoguardprotector|executerepay|doc-claims-bos-caps-over-repay	NEW	1	edec6e7	The security doc says BorrowerOperations caps a large repay, but it reverts	LEAD
+mezoguardprotector|executerepay|bos-upgrade-breaks-protector	NEW	1	edec6e7	A BorrowerOperations upgrade can stop every executeRepay	LEAD
+mezoguardprotector|constructor|bos-upgrade-breaks-protector	NEW	1	edec6e7	The protector hard-codes the BorrowerOperationsSignatures digest	LEAD
+mezoguardprotector|arm|no-price-or-icr-check-at-arm	NEW	1	edec6e7	The arm function does not read the current ICR	LEAD
+mezoguardprotector|arm|bos-repay-revert-unpredicted	NEW	1	edec6e7	The arm function accepts a repay amount that BorrowerOperations later rejects	LEAD
+mezoguardprotector|arm|dust-repay-no-improvement	NEW	1	edec6e7	The arm function accepts a one-wei repay	LEAD
+mezoguardprotector|canexecute|bos-repay-revert-unpredicted	NEW	1	edec6e7	canExecute reports ready for a repay that BorrowerOperations rejects	LEAD
+mezoguardprotector|deposit|budget-credit-before-transfer	NEW	1	edec6e7	deposit credits the budget before the token transfer	LEAD
+deploy|run|deploy-address-override	NEW	1	edec6e7	The deploy script accepts any address that has code	LEAD
+mezoguardprotector|executerepay|stale-nonce-no-recheck	NEW	1	edec6e7	Any other signed BorrowerOperations action disarms the rule	LEAD
+mezoguardprotector|executerepay|partial-rescue-accepted	NEW	1	edec6e7	In Recovery Mode the protector accepts a repay that leaves ICR below 110%	LEAD
+mezoguardprotector|executerepay|one-shot-rule-lapses	NEW	1	edec6e7	The rule disarms after one repay even when ICR stays below the trigger	LEAD
+mezoguardprotector|constructor|unchecked-dependency-wiring	NEW	1	edec6e7	The constructor does not check that its TroveManager and PriceFeed match Borrowe	LEAD
+mezoguardprotector|arm|unbounded-signature-deadline	NEW	1	edec6e7	The arm function accepts a signature deadline with no upper limit	LEAD
+deploy|run|deployment-record-overwrite	NEW	1	edec6e7	Each deploy run overwrites the deployment record	LEAD
